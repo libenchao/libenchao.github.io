@@ -1,0 +1,80 @@
+---
+layout: post
+title:  "airbase介绍"
+date:   2018-07-04 21:44:19 +0800
+categories: Presto源码阅读
+---
+Presto源码中大量依赖airlift项目，第一个依赖的项目就是airbase。依赖形式为：
+
+{% highlight xml %}
+<parent>
+    <groupId>io.airlift</groupId>
+    <artifactId>airbase</artifactId>
+    <version>80</version>
+</parent>
+{% endhighlight %}
+
+airbase主要是为了提供一些基础的pom配置，详细介绍在github上有。主要利用的是maven的parent继承特性。
+
+在maven中，parent继承是为了从父pom文件中继承各种配置，通常是在比较大的项目中，把大家通用的依赖写在项目根pom中，每个子模块通过继承父pom文件来达到降低pom文件复杂度的效果。
+
+说到继承，就要说一些module模块。也是在大一点的项目里，通常会拆分成多个子模块，其实每个子模块都是一个独立的项目，可以单独编译运行。但是可以在父pom里通过module的功能把各个子模块同时进行编译打包。而且子模块在父pom中声明的顺序是无所谓的，maven会根据他们之间的依赖拓扑进行编译。类似于下面这种配置：
+
+{% highlight xml %}
+<modules>
+    <module>presto-atop</module>
+    <module>presto-spi</module>
+    <module>presto-array</module>
+    <module>presto-jmx</module>
+    <module>presto-record-decoder</module>
+    <module>presto-kafka</module>
+    <module>presto-redis</module>
+    <module>presto-accumulo</module>
+    <module>presto-cassandra</module>
+    <module>presto-blackhole</module>
+    <module>presto-memory</module>
+    <module>presto-orc</module>
+    <module>presto-rcfile</module>
+    <module>presto-hive</module>
+    <module>presto-hive-hadoop2</module>
+    <module>presto-teradata-functions</module>
+    <module>presto-example-http</module>
+    <module>presto-local-file</module>
+    <module>presto-tpch</module>
+    <module>presto-tpcds</module>
+    <module>presto-raptor</module>
+    <module>presto-base-jdbc</module>
+    <module>presto-mysql</module>
+    <module>presto-postgresql</module>
+    <module>presto-redshift</module>
+    <module>presto-sqlserver</module>
+    <module>presto-mongodb</module>
+    <module>presto-client</module>
+    <module>presto-parser</module>
+    <module>presto-main</module>
+    <module>presto-ml</module>
+    <module>presto-geospatial</module>
+    <module>presto-geospatial-toolkit</module>
+    <module>presto-benchmark</module>
+    <module>presto-tests</module>
+    <module>presto-product-tests</module>
+    <module>presto-jdbc</module>
+    <module>presto-cli</module>
+    <module>presto-benchmark-driver</module>
+    <module>presto-server</module>
+    <module>presto-server-rpm</module>
+    <module>presto-docs</module>
+    <module>presto-verifier</module>
+    <module>presto-testing-server-launcher</module>
+    <module>presto-plugin-toolkit</module>
+    <module>presto-resource-group-managers</module>
+    <module>presto-password-authenticators</module>
+    <module>presto-benchto-benchmarks</module>
+    <module>presto-thrift-connector-api</module>
+    <module>presto-thrift-testing-server</module>
+    <module>presto-thrift-connector</module>
+    <module>presto-matching</module>
+    <module>presto-memory-context</module>
+    <module>presto-proxy</module>
+</modules>
+{% endhighlight %}
