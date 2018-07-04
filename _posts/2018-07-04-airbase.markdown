@@ -78,3 +78,5 @@ airbase主要是为了提供一些基础的pom配置，详细介绍在github上�
     <module>presto-proxy</module>
 </modules>
 {% endhighlight %}
+
+parent继承和module模块化并不是非要对称使用的，两个特性完全可以独立使用，互不影响。只不过一般在大型项目里这两个一般会同时出现而已。
